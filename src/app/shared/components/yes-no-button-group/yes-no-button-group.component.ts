@@ -1,6 +1,7 @@
-import { debugOutputAstAsTypeScript } from '@angular/compiler';
 import { Component, Input, OnInit, EventEmitter, Output, forwardRef, Optional, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { UniqueIdService } from '../../services/unique-id/unique-id.service';
+
 
 @Component({
   selector: 'app-yes-no-button-group',
@@ -19,12 +20,19 @@ export class YesNoButtonGroupComponent implements OnInit, ControlValueAccessor {
   @Input() public value: string = null;
   @Input() public label = '';
   @Output() public valueChange = new EventEmitter<string>();
+  public id: string = null;
   onChange = (value : string) => {};
   onTouched = () => {};
 
   options = YesNoButtonGroupOptions;
 
-  constructor(@Optional() @Self() ngControl: NgControl) { ngControl.valueAccessor = this;}
+  constructor(
+    @Optional() @Self() ngControl: NgControl,
+    uniqueIdService: UniqueIdService,
+  ) {
+    ngControl.valueAccessor = this;
+    this.id = uniqueIdService.generateUniqueIdWithPrefix('yes-no-button-group');
+  }
   writeValue(value: string): void {
     this.value = value;
     this.onChange(this.value);
