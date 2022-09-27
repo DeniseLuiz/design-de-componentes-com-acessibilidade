@@ -7,9 +7,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  form: FormGroup= null;
-  title = 'a11y-p1';
-  yesNoAnswer = 'no';
+  form: FormGroup = null;
+  title = 'acessibilidade';
 
   constructor( private fb: FormBuilder ) {
     this.form = this.fb.group({
